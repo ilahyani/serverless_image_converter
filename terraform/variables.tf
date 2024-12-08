@@ -1,19 +1,20 @@
 ##### PROVIDER
-variable "aws_access_key" {
-  type        = string
-}
+# variable "aws_access_key" {
+#   type        = string
+# }
 
-variable "aws_secret_key" {
-  type        = string
-}
+# variable "aws_secret_key" {
+#   type        = string
+# }
 
-variable "AWS_REGION" {
-  type        = string
-}
+# variable "AWS_REGION" {
+#   type        = string
+# }
 
-variable "aws_profile" {
-  type        = string
-}
+# variable "aws_profile" {
+#   type        = string
+#   default = "default"
+# }
 
 ##### LAMBDA
 variable "lambda_function_name" {

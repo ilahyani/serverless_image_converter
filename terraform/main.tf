@@ -13,12 +13,12 @@ terraform {
   }
 }
 
-provider "aws" {
-  profile    = var.aws_profile
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region     = var.AWS_REGION
-}
+# provider "aws" {
+#   profile    = var.aws_profile
+#   access_key = var.aws_access_key
+#   secret_key = var.aws_secret_key
+#   region     = var.AWS_REGION
+# }
 
 module "s3_original_files_bucket" {
     source = "./modules/s3"
