@@ -18,10 +18,10 @@ sudo unzip "awscli-exe-linux-x86_64.zip"
 sudo ./aws/install
 sudo aws --version
 
-sudo -u vagrant aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile vagrant
-sudo -u vagrant aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile vagrant
-sudo -u vagrant aws configure set region "$AWS_REGION" --profile vagrant
-sudo -u vagrant aws configure list --profile vagrant
+sudo -u vagrant aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+sudo -u vagrant aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+sudo -u vagrant aws configure set region "$AWS_REGION"
+sudo -u vagrant aws configure list
 
 sudo wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
@@ -32,5 +32,5 @@ cd /home/vagrant/serverless/function
 npm install -f
 
 cd /home/vagrant/serverless/terraform
-# sudo -u vagrant terraform init -migrate-state
-# sudo -u vagrant terraform apply --auto-approve
+sudo -u vagrant terraform init -migrate-state
+sudo -u vagrant terraform apply --auto-approve
