@@ -1,0 +1,59 @@
+name: Deploy Infrastructure
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    terraform:
+        runs-on: ubuntu-latest
+        
+        defaults:
+            run:
+                shell: bash
+        
+        env:
+            TF_VAR_lambda_function_name: "webp_convert"
+            TF_VAR_lambda_runtime: "nodejs18.x"
+            TF_VAR_lambda_handler: "index.handler"
+            TF_VAR_lambda_src_code: "../function"
+            TF_VAR_lambda_zip: "./lambda.zip"
+            TF_VAR_original_files_bucket_name: "bucket-orginal-file"
+            TF_VAR_edited_files_bucket_name: "bucket-edit-file" 
+        
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            
+            - name: Setup Nodejs
+              uses: actions/setup-node@v3
+              with:
+                node-version: 18
+            
+            - name: Install Nodejs App Dependencies
+              run: |
+                cd function
+                npm install -f
+
+            - name: Setup Terraform
+              uses: hashicorp/setup-terraform@v2
+              with:
+                  terraform_version: 1.9.8
+            
+            - name: Configure AWS Creds
+              uses: aws-actions/configure-aws-credentials@v3
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ${{ secrets.AWS_REGION }}
+            
+            - name: Initialize Terrafrom
+              run: |
+                cd infrastructure/terraform
+                terraform init -migrate-state
+
+            - name: Terraform Apply
+              run: |
+                cd infrastructure/terraform
+                terraform apply --auto-approve
