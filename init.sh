@@ -32,5 +32,5 @@ cd /home/vagrant/watermark_function/function
 npm install -f
 
 cd /home/vagrant/watermark_function/terraform
-terraform init
+sudo -u vagrant terraform init -migrate-state
 sudo -u vagrant terraform apply --auto-approve
