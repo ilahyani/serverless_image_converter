@@ -50,10 +50,10 @@ jobs:
             
             - name: Initialize Terrafrom
               run: |
-                cd infrastructure/terraform
+                cd terraform
                 terraform init -migrate-state
 
             - name: Terraform Apply
               run: |
-                cd infrastructure/terraform
+                cd terraform
                 terraform apply --auto-approve
