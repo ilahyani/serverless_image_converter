@@ -5,6 +5,6 @@ Vagrant.configure("2") do |config|
     "AWS_SECRET_ACCESS_KEY" => ENV['AWS_SECRET_ACCESS_KEY'],
     "AWS_REGION" => ENV['AWS_REGION']
   }
-  config.vm.synced_folder ".", "/home/vagrant/function", type: "virtualbox"
+  config.vm.synced_folder ".", "/home/vagrant/serverless", type: "virtualbox"
   config.vm.network "forwarded_port", guest: 3000, host: 3000
 end

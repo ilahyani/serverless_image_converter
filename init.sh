@@ -28,9 +28,9 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 nvm install 18
 
-cd /home/vagrant/watermark_function/function
+cd /home/vagrant/serverless/function
 npm install -f
 
-cd /home/vagrant/watermark_function/terraform
-sudo -u vagrant terraform init -migrate-state
-sudo -u vagrant terraform apply --auto-approve
+cd /home/vagrant/serverless/terraform
+# sudo -u vagrant terraform init -migrate-state
+# sudo -u vagrant terraform apply --auto-approve
