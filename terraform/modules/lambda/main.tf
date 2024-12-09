@@ -47,24 +47,22 @@ resource "aws_iam_role_policy" "lambda_permissions_policy" {
     })
 }
 
-resource "aws_s3_bucket_notification" "image_upload_notification" {
-    bucket = var.original_files_bucket_name
-
-    lambda_function {
-        events = ["s3:ObjectCreated:*"] 
-        lambda_function_arn = "${aws_lambda_function.converter.arn}"
-    }
-
-    depends_on = [aws_lambda_function.converter]
-}
-
 resource "aws_lambda_permission" "allow_s3_invoke" {
     statement_id  = "AllowExecutionFromS3Bucket"
     action        = "lambda:InvokeFunction"
     principal     = "s3.amazonaws.com"
-    source_arn    = var.original_files_bucket_arn
+    source_arn    = "arn:aws:s3:::${var.original_files_bucket_name}"
     function_name = aws_lambda_function.converter.function_name
     depends_on = [aws_lambda_function.converter]
+}
+
+resource "aws_s3_bucket_notification" "image_upload_notification" {
+    bucket = var.original_files_bucket_name
+    lambda_function {
+        events = ["s3:ObjectCreated:*"] 
+        lambda_function_arn = "${aws_lambda_function.converter.arn}"
+    }
+    depends_on = [aws_lambda_function.converter, aws_lambda_permission.allow_s3_invoke]
 }
 
 data "archive_file" "lambda_zip" {
